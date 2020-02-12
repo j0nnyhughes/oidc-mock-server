@@ -104,7 +104,9 @@ namespace Web.Host
             return clients.Select(client => new Client
             {
                 ClientId = client.ClientId,
-                AllowedScopes = client.AllowedScopes
+                RequireClientSecret = false,
+                AllowedScopes = client.AllowedScopes,
+                AllowedGrantTypes = GrantTypes.ClientCredentials
             }).ToList();
         }
         

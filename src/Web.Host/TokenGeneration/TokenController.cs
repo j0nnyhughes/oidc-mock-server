@@ -58,7 +58,7 @@ namespace Web.Host.TokenGeneration
         public async Task<ActionResult> GenerateAccess([FromBody] GenerateAccessToken accessTokenRequest)
         {
             var client = await _clientStore.FindClientByIdAsync(accessTokenRequest.ClientId);
-            var scopes = accessTokenRequest.Scopes.Where(requestedScope => client.AllowedScopes.Contains(requestedScope)).ToList();
+            var scopes = accessTokenRequest.Scope.Split(' ').Where(requestedScope => client.AllowedScopes.Contains(requestedScope)).ToList();
 
             if (!scopes.Any())
             {
@@ -82,7 +82,7 @@ namespace Web.Host.TokenGeneration
             };
 
             var generatedToken = await _tokenCreationService.CreateTokenAsync(token);
-            return Ok(new{AccessToken = generatedToken});
+            return Ok(new{Access_Token = generatedToken});
         }
     }
 }
